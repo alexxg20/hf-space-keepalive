@@ -1,0 +1,20 @@
+name: keep-hf-space-awake
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes (UTC)
+  workflow_dispatch:          # allows manual runs
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Ping Hugging Face Space
+        run: |
+          # small jitter so many users don't hit at the exact same second
+          sleep $((RANDOM % 20))
+          # Follow redirects, fail on HTTP >= 400, short timeout
+          curl -sSL --fail --max-time 20 \
+            -H "User-Agent: keepalive-gh-actions" \
+            "https://alexxg20-predictor-cripto.hf.space/?t=$(date +%s)"
