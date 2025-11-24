@@ -15,6 +15,6 @@ jobs:
           # small jitter so many users don't hit at the exact same second
           sleep $((RANDOM % 20))
           # Follow redirects, fail on HTTP >= 400, short timeout
-          curl -sSL --fail --max-time 20 \
+          curl -sSL --fail --max-time 60 \
             -H "User-Agent: keepalive-gh-actions" \
             "https://alexxg20-predictor-cripto.hf.space/?t=$(date +%s)"
